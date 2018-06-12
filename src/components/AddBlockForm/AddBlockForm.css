@@ -1,0 +1,13 @@
+.card {
+	width: 700px; 
+	margin: 50px auto; 
+	padding: 0;
+}
+
+.card-header {
+	font-size: 20px;
+}
+
+.btn {
+	font-size: 14px;
+}

@@ -1,0 +1,41 @@
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+*.sass-cache
+
+# OS or Editor folders
+.DS_Store
+.cache
+.project
+.settings
+.tags
+.tmproj
+nbproject
+Thumbs.db
+tags
+
+# NPM packages folder.
+Node/
+node_modules/
+__MACOSX
+README.md
+
+# Brunch folder for temporary files.
+tmp/
+
+# Brunch output folder.
+public/
+package.sublime-workspace
+
+# API Docs
+docs/api/
+
+# DotEnv
+.env
