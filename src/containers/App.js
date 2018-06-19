@@ -11,6 +11,7 @@ const initialState = {
       isPending: true,
       cardColor: "warning",
       route: "genesis",
+      input: "",
       currentblock: {
         timestamp: "",
         data: "Genesis Block",
@@ -27,17 +28,20 @@ class App extends Component {
     this.state = initialState
     this.newMiner = new BlockMiner();
     this.newBlock = this.newBlock.bind(this)
+    this.enterkey = this.enterkey.bind(this)
+    this.onInputChange = this.onInputChange.bind(this)
     this.onButtonSubmit = this.onButtonSubmit.bind(this)
     }
 
-  genesis() {
+  genesis = () => {
     const { currentblock } = this.state;
     const genblock = this.newMiner.createBlock(currentblock);
     this.loadCurrentBlock(genblock);
   }
 
-  loadCurrentBlock (nextblock) {
+  loadCurrentBlock = (nextblock) => {
     this.setState({
+      input: "",	
       currentblock: {
         timestamp: nextblock.timestamp,
         data: nextblock.data,
@@ -47,25 +51,36 @@ class App extends Component {
         hash: nextblock.hash
       },
       isPending: false
-    })
+    });
+    this.render();
   }
 
-  newBlock (datum) {
+  newBlock = (datum) => {
     const { currentblock } = this.state;
     currentblock.data = datum; //setState after block is hashed
     let nextblock = this.newMiner.createBlock(currentblock);
     this.loadCurrentBlock(nextblock);
     this.onRouteChange("chain");
   }
+ 
+ enterkey (e) {
+   if (e.key == 'Enter') {
+     this.onButtonSubmit(e)
+   } 
+ }
 
+ onInputChange (e) {
+    this.setState({input: e.target.value});
+  }; 
  //for when user submits new data field block in AddBlockForm
- onButtonSubmit (value) {
-  const { newBlock } = this.props;
-  let newInput = value.trim();
-  if (newInput.length > 0) {
-      this.newBlock(newInput);
-  }
-  this.onRouteChange("chain");
+ onButtonSubmit (e) {
+ 	  e.preventDefault();
+	  let newInput = this.state.input;
+	  newInput = newInput.trim();
+	  if (newInput) {
+	      this.newBlock(newInput);
+	      this.onRouteChange("chain");
+	  }
 }
 
 //currently, user cannot start over or edit existing blocks
@@ -99,13 +114,23 @@ onRouteChange = (route) => {
           { route === 'genesis' 
             ? <div>
                   <Block cardColor={cardColor} titleLabel="Genesis Block" block={currentblock}/>
-                  <AddBlockForm onClick={this.onButtonSubmit}/>
+                  <AddBlockForm 
+                      input={this.state.input}
+                      enterkey={this.enterkey}
+                      onInputChange={this.onInputChange} 
+                      onButtonSubmit={this.onButtonSubmit} 
+                  />
               </div>
             
             : (route === 'chain'
                ? <div>  
                   <BlockLinker blockchain={ this.newMiner.blockchain }/>
-                  <AddBlockForm onClick={this.onButtonSubmit} />
+                  <AddBlockForm 
+                      input={this.state.input}
+                      enterkey={this.enterkey}
+                      onInputChange={this.onInputChange} 
+                      onButtonSubmit={this.onButtonSubmit} 
+                  />
                 </div>
                : ( 
                   <div> 
