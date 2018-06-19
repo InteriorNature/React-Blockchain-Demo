@@ -15,32 +15,7 @@ const style = {
   }
 };
 
-class AddBlockForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      input: ""
-    };
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onButtonSubmit = this.onButtonSubmit.bind(this);
-  }
-
-  onInputChange (event) {
-    let { input } = this.state;
-    console.log(event.target.value);
-    this.setState({input: event.target.value});
-    console.log(input);
-  };
-
-  onButtonSubmit (event) {
-    event.preventDefault();
-    if (this.props.onClick && typeof this.props.onClick === "function") {
-      this.props.onClick(this.state.input);
-    }
-  }
-
-   render() {
-    const { classes } = this.props;
+const AddBlockForm = ({ classes, input, enterkey, onInputChange, onButtonSubmit }) => {
     return(
 		<Card className={classes.textCenter} style={{width: "55rem"}} >
         <CardHeader color="primary" style={{fontSize: "1.25rem", fontWeight: "100"}}>LINK NEXT SEQUENCE</CardHeader>
@@ -49,22 +24,25 @@ class AddBlockForm extends React.Component {
               <CustomInput
                   labelText="Enter data to mine"
                   id="inputData"
-                  inputProps={
-                    {placeholder: "Enter data to mine"},
-                    {value: this.state.input},
-                    {onChange:  this.onInputChange}
-                  }
-                  formControlProps={{ fullWidth: true }}
+                  inputProps={{
+                    placeholder: "",
+                    value: input,
+                    onChange: onInputChange
+                  }}
+                  formControlProps={{ 
+                    fullWidth: true, 
+                    onKeyPress: enterkey
+                  }}
               />
           </GridItem>
           <Button 
+            type="submit"
             color="primary" 
             style={{fontSize: "1.25rem", fontWeight: "100"}} 
-            onClick={ this.onButtonSubmit }>Add</Button>
+            onClick={ onButtonSubmit }>Add</Button>
         </CardBody>
       </Card>          
     );
-  }
 };
 
 export default withStyles(style)(AddBlockForm);
