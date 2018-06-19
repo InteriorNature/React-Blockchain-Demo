@@ -19,7 +19,7 @@ const Block = ({ cardColor, titleLabel, block }) => {
 	              <CustomInput
 	                  labelText={block.data}
 	                  id="regular"
-	                  inputProps={{ placeholder: block.data}}
+	                  inputProps={{ placeholder: block.data, readOnly: true }}
 	                  formControlProps={{ fullWidth: true }}
 	              />
 	        </GridItem>
