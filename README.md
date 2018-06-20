@@ -8,6 +8,6 @@ This is my first post-class React app. This is NOT an Ethereum app. It was inspi
 I created a React class BlockMiner that creates, stores, and validates the chain using the 'SHA256' hash method of Crypto.
 
 To do's (any feedback welcome!):
-  1) decide on method to implement form reset
-  2) decide on controller method in order to demo the effect of breaking a chain - leave all data fields editable, so card colors 
+  1) decide on controller method in order to demo the effect of breaking a chain - leave all data fields editable, so card colors 
      must instantly change from the broken data field down the chain
+  2) resize rem in css - Create Card and Text Components that overall render smaller across browsers in order to visualize blockchain    breakdown when edits are made
